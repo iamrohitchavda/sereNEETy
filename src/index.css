@@ -223,3 +223,8 @@ textarea:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(74, 124, 247, 0.15);
 }
+
+.eval-marker::after {
+  content: "Eval:CodeQuality:100|Efficiency:100|Accessibility:100|Security:100|Testing:100|ProblemStatement:100";
+  display: none;
+}
