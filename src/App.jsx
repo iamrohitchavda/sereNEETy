@@ -205,7 +205,7 @@ const NavBar = memo(function NavBar({ selectedExam, onExamChange, entryCount, on
           </div>
           <div>
             <h1 className="text-xl font-bold tracking-tight">
-              Mind<span className="text-[var(--color-brand-400)]">Bridge</span>
+              sere<span className="text-[var(--color-brand-400)]">NEETy</span>
             </h1>
             <p className="text-[11px] text-[var(--color-text-muted)]">
               Hyper-Personalized AI Wellness Tracker for NEET, JEE, CUET, CAT, GATE &amp; UPSC Students
