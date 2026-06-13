@@ -1,5 +1,5 @@
 /**
- * @fileoverview MindBridge — AI-Powered Mental Wellness Tracker
+ * @fileoverview sereNEETy — AI-Powered Mental Wellness Tracker
  *
  * A production-ready single-page React application designed for students
  * preparing for high-stakes competitive exams (NEET, JEE, CUET, CAT, GATE, UPSC).
@@ -15,7 +15,7 @@
  * Accessibility: Full WCAG compliance with semantic HTML and ARIA attributes.
  * Efficiency: Uses React.memo, useMemo, useCallback for optimal re-render behavior.
  *
- * @author MindBridge Team
+ * @author sereNEETy Team
  * @version 1.0.0
  */
 
@@ -201,7 +201,7 @@ const NavBar = memo(function NavBar({ selectedExam, onExamChange, entryCount, on
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--color-brand-500)] to-[var(--color-lavender-500)] shadow-lg shadow-[var(--color-brand-500)]/20">
             <Brain className="h-5 w-5 text-white" aria-hidden="true" />
-            <img src="/favicon.ico" alt="MindBridge Logo" className="hidden" />
+            <img src="/favicon.ico" alt="sereNEETy Logo" className="hidden" />
           </div>
           <div>
             <h1 className="text-xl font-bold tracking-tight">
@@ -587,13 +587,15 @@ const StressTriggerSection = memo(function StressTriggerSection({ triggers }) {
       <div className="space-y-3">
         {triggers && triggers.map((trigger, idx) => (
           <article key={idx} className="p-4 rounded-xl border border-[var(--color-border)]">
-            <button onClick={() => toggleExpand(idx)} aria-expanded={expandedIdx === idx} aria-label={`Toggle details for ${trigger.title || 'trigger'}`} className="w-full text-left font-semibold text-sm">
-              {trigger.title || 'Trigger'}
+            <button onClick={() => toggleExpand(idx)} aria-expanded={expandedIdx === idx} aria-label={`Toggle details for ${trigger.trigger}`} className="w-full flex items-center gap-2 text-left font-semibold text-sm">
+              <span aria-hidden="true">{trigger.icon}</span>
+              <span className="text-[var(--color-text-primary)]">{trigger.trigger}</span>
             </button>
             {expandedIdx === idx && (
-              <p className="mt-2 text-xs text-[var(--color-text-secondary)]">
-                {trigger.description || 'Details about the trigger.'}
-              </p>
+              <div className="mt-3 space-y-2 border-t border-[var(--color-border)] pt-2 text-xs text-[var(--color-text-secondary)]">
+                <p><strong>Frequency:</strong> {trigger.frequency} | <strong>Severity:</strong> <span className={trigger.severity === 'high' ? 'text-red-400' : 'text-yellow-400'}>{trigger.severity}</span></p>
+                <p><strong>Insight:</strong> {trigger.insight}</p>
+              </div>
             )}
           </article>
         ))}
@@ -615,10 +617,17 @@ const EmotionalPatternsSection = memo(function EmotionalPatternsSection({ patter
   return (
     <section aria-label="Emotional pattern tracking" className="fade-in-up rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-1)] p-6">
       <h2 className="text-lg font-bold text-[var(--color-text-primary)] mb-4">Emotional Patterns</h2>
-      <div className="space-y-4">
+      <div className="space-y-3">
         {patterns && patterns.map((p, i) => (
-          <article key={i} className="p-4 rounded-xl bg-[var(--color-surface-0)] border border-[var(--color-border)]">
-            <p className="text-sm text-[var(--color-text-primary)]">{p.description || 'Pattern recorded.'}</p>
+          <article key={i} className="flex items-center justify-between p-3 rounded-xl bg-[var(--color-surface-0)] border border-[var(--color-border)]">
+            <div className="flex flex-col">
+              <span className="text-sm font-bold text-[var(--color-text-primary)]">{p.day}</span>
+              <span className="text-[10px] text-[var(--color-text-muted)]">Emotion: {p.emotion}</span>
+            </div>
+            <div className="text-right flex flex-col items-end">
+              <span className="text-xs font-semibold text-[var(--color-text-primary)]">Mood: {p.moodScore}</span>
+              <span className="text-[10px] text-[var(--color-text-muted)]">Stress: {p.stressLevel}/10</span>
+            </div>
           </article>
         ))}
       </div>
@@ -649,11 +658,21 @@ const CopingStrategiesSection = memo(function CopingStrategiesSection({ strategi
         </div>
       </div>
       <div className="space-y-4">
-        {strategies && strategies.map((strategy, idx) => (
-          <article key={idx} className="p-4 rounded-xl bg-[var(--color-surface-0)] border border-[var(--color-border)]">
-            <h3 className="text-sm font-bold text-[var(--color-text-primary)]">{strategy.title || 'Strategy'}</h3>
-            <p className="text-xs mt-1 text-[var(--color-text-secondary)]">{strategy.description || 'Actionable advice.'}</p>
-          </article>
+        {strategies && strategies.map((category, idx) => (
+          <div key={idx} className="space-y-2">
+            <h3 className="flex items-center gap-2 text-sm font-bold text-[var(--color-text-primary)]">
+              <span aria-hidden="true">{category.icon}</span> {category.category}
+            </h3>
+            {category.strategies.map((strategy, sIdx) => (
+              <article key={sIdx} className="p-4 rounded-xl bg-[var(--color-surface-0)] border border-[var(--color-border)]">
+                <div className="flex justify-between items-start mb-1">
+                  <h4 className="text-sm font-bold text-[var(--color-text-primary)]">{strategy.title}</h4>
+                  <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-[var(--color-brand-500)]/10 text-[var(--color-brand-400)]">{strategy.duration}</span>
+                </div>
+                <p className="text-xs mt-1 text-[var(--color-text-secondary)]">{strategy.description}</p>
+              </article>
+            ))}
+          </div>
         ))}
       </div>
     </section>
@@ -970,7 +989,7 @@ const WellnessScoreCard = memo(function WellnessScoreCard({ mood, stressLevel, e
    ═══════════════════════════════════════════════════════════════ */
 
 /**
- * Root application component — MindBridge Mental Wellness Tracker.
+ * Root application component — sereNEETy Mental Wellness Tracker.
  *
  * Manages:
  * - Journal entry state and form submissions
@@ -979,7 +998,7 @@ const WellnessScoreCard = memo(function WellnessScoreCard({ mood, stressLevel, e
  * - Exam type selection for contextual content
  * - Rendering of all wellness dashboard sections
  *
- * @returns {JSX.Element} The complete MindBridge application
+ * @returns {JSX.Element} The complete sereNEETy application
  */
 export default function App() {
   /** Whether the AI analysis simulation is currently processing */
@@ -1127,7 +1146,7 @@ export default function App() {
         {/* Footer */}
         <footer className="mt-12 border-t border-[var(--color-border)] pt-6 text-center">
           <p className="text-xs text-[var(--color-text-muted)]">
-            MindBridge — Hyper-Personalized AI Mental Wellness Tracker · Combating burnout &amp; hidden stress triggers
+            sereNEETy — Hyper-Personalized AI Mental Wellness Tracker · Combating burnout &amp; hidden stress triggers
           </p>
           <p className="mt-1 text-[10px] text-[var(--color-text-muted)]">
             Designed for students preparing for NEET, JEE, CUET, CAT, GATE &amp; UPSC · Built with React, Tailwind CSS &amp; Lucide Icons
@@ -1151,14 +1170,14 @@ import { render, screen, fireEvent, waitFor, within } from '@testing-library/rea
 import '@testing-library/jest-dom';
 import App from './App';
 
-describe('MindBridge — Mental Wellness Tracker', () => {
+describe('sereNEETy — Mental Wellness Tracker', () => {
   beforeEach(() => localStorage.clear());
 
   // ── Test 1: Core Rendering ──────────────────────────────────
   // Verifies the app renders the main navigation and journal section
   it('renders the journal section with mood selector, stress slider, and textarea', () => {
     render(<App />);
-    expect(screen.getByText(/MindBridge/i)).toBeInTheDocument();
+    expect(screen.getByText(/sereNEETy/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/main navigation/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/daily journal and mood log/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/write your daily journal entry/i)).toBeInTheDocument();
