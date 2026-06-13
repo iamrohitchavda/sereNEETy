@@ -726,7 +726,7 @@ const MotivationalSection = memo(function MotivationalSection({ selectedExam }) 
         </div>
       </div>
       <div className="space-y-4">
-        {motivationalContent && motivationalContent.map((item, idx) => (
+        {motivationalContent && motivationalContent[selectedExam] && motivationalContent[selectedExam].map((item, idx) => (
           <article
             key={idx}
             className="rounded-xl border border-[var(--color-amber-500)]/20 bg-gradient-to-r from-[var(--color-amber-500)]/5 to-transparent p-5"
